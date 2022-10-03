@@ -1,0 +1,14 @@
+/src
+
+docker-compose.yml
+backup_db.sh
+bash.sh
+
+!volumes/
+volumes/*
+!volumes/laravel/
+
+
+.idea/
+
+backup/mysql/*

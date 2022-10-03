@@ -1,0 +1,4 @@
+OUTPUT_PATH=./backup/mysql/laravel_$(date '+%Y-%m-%d_%H:%M:%S').sql
+docker exec YOUR_PROJECT_NAME_mysql_1 sh -c 'exec mysqldump --databases laravel -uroot -p"password"' > ${OUTPUT_PATH}
+
+echo "Done, file output to ${OUTPUT_PATH}"
