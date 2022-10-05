@@ -8,19 +8,6 @@ cp docker-compose.example docker-compose.yml
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" docker-compose.yml
 sed -i "s/YOUR_PROJECT_DOMAIN.com/$projectDomain/g" docker-compose.yml
 
-DEFAULT="y"
-read -p "Enable redis? [Y/n]: " eRedis
-eRedis="${eRedis:-${DEFAULT}}"
-if [ "${eRedis}" = "y" ] || [ "${eRedis}" = "Y" ]; then
-	sed -i "s/#redis//g" docker-compose.yml
-fi
-
-read -p "Enable meilisearch? [Y/n]: " eMeilisearch
-eMeilisearch="${eMeilisearch:-${DEFAULT}}"
-if [ "${eMeilisearch}" = "y" ] || [ "${eMeilisearch}" = "Y" ] ; then
-	sed -i "s/#meilisearch//g" docker-compose.yml
-fi
-
 DEFAULT="n"
 read -p "Run Laravel at octane? [y/N]: " eOctane
 eOctane="${eOctane:-${DEFAULT}}"
