@@ -19,41 +19,6 @@ services:
     networks:
       - internal
 
-  mysql:
-    image: mysql/mysql-server:8.0.28
-    restart: unless-stopped
-    tty: true
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_ROOT_HOST: 172.%.%.%
-    volumes:
-      - ./volumes/mysql:/var/lib/mysql/
-      - ./config/mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - internal
-
-#redis  redis:
-#redis    restart: always
-#redis    tty: true
-#redis    image: redis:alpine
-#redis    ports:
-#redis      - 6379
-#redis    volumes:
-#redis      - ./volumes/redis-data:/data
-#redis    networks:
-#redis      - internal
-
-#meilisearch  meilisearch:
-#meilisearch    image: getmeili/meilisearch:v0.28
-#meilisearch    restart: unless-stopped
-#meilisearch    volumes:
-#meilisearch      - ./volumes/meilisearch:/data.ms
-#meilisearch    ports:
-#meilisearch      - 7700
-#meilisearch    networks:
-#meilisearch      - internal
-
   nginx:
     image: nginx:stable-alpine
     restart: unless-stopped
@@ -81,5 +46,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.16.1.0/24
-          gateway: 172.16.1.1
+        - subnet: 172.16.2.0/24
+          gateway: 172.16.2.1

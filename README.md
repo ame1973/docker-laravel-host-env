@@ -15,12 +15,6 @@
 > 
 > [ame1973/docker-traefik-portainer](https://github.com/ame1973/docker-traefik-portainer)
 
-## Optional services
-
-- redis
-
-- meilisearch
-
 ## host project
 
 1. change this project folder name to your own project name.
