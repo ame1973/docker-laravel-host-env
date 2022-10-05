@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p 'Project Name: ' projectName
+read -p 'Project Name (A-Za-z0-9_): ' projectName
 read -p 'Project Domain: ' projectDomain
 
 cp docker-compose.example docker-compose.yml
@@ -17,7 +17,7 @@ else
 	sed -i "s/#php-fpm//g" docker-compose.yml
 fi
 
-MYSQL_COMMAND="create database $projectName\_db;"
+MYSQL_COMMAND="create database ${projectName}_db;"
 docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql -uroot -p'password'"
 
 FILE=./src/.env.example
