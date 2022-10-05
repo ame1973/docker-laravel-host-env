@@ -18,7 +18,7 @@ else
 fi
 
 MYSQL_COMMAND="create database $projectName\_db;"
-docker exec docker-laravel-base-env-mysql-1 sh -c 'echo $MYSQL_COMMAND | mysql -uroot -p"password"' > ${OUTPUT_PATH}
+docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql -uroot -p'password'"
 
 FILE=./src/.env.example
 if test -f "$FILE"; then
