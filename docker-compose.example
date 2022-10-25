@@ -35,8 +35,26 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-proxy"
-      - "traefik.http.routers.YOUR_PROJECT_NAME.rule=Host(`YOUR_PROJECT_DOMAIN.com`)"
+      - "traefik.http.routers.YOUR_PROJECT_NAME.rule=Host(`YOUR_PROJECT_DOMAIN`)"
       - "traefik.http.routers.YOUR_PROJECT_NAME.entrypoints=websecure"
+
+#frontend-service  frontend:
+#frontend-service    image: nginx:stable-alpine
+#frontend-service    restart: unless-stopped
+#frontend-service    tty: true
+#frontend-service    working_dir: /var/www/
+#frontend-service    volumes:
+#frontend-service      - ./frontend_src:/var/www
+#frontend-service      - ./volumes/frontend_nginx/log:/var/log/nginx
+#frontend-service      - ./config/nginx/frontend/default.conf:/etc/nginx/conf.d/default.conf
+#frontend-service    networks:
+#frontend-service      - internal
+#frontend-service      - traefik-proxy
+#frontend-service    labels:
+#frontend-service      - "traefik.enable=true"
+#frontend-service      - "traefik.docker.network=traefik-proxy"
+#frontend-service      - "traefik.http.routers.dev_nftiv_marketplace_frontend.rule=Host(`YOUR_PROJECT_FRONTEND_DOMAIN`)"
+#frontend-service      - "traefik.http.routers.dev_nftiv_marketplace_frontend.entrypoints=websecure"
 
 networks:
   traefik-proxy:

@@ -20,6 +20,16 @@ fi
 MYSQL_COMMAND="create database ${projectName}_db;"
 docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql -uroot -p'password'"
 
+read -p "Enable Frontend web service? [y/N]: " eFrontend
+eFrontend="${eFrontend:-${DEFAULT}}"
+if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
+  read -p 'Frontend Domain: ' frontendDomain
+  sed -i "s/YOUR_PROJECT_FRONTEND_DOMAIN/$frontendDomain/g" docker-compose.yml
+
+	sed -i "s/#frontend-service//g" docker-compose.yml
+	mkdir "frontend_src"
+fi
+
 FILE=./src/.env.example
 if test -f "$FILE"; then
     cp ./src/.env.example ./src/.env
