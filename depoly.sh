@@ -27,12 +27,18 @@ if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
   sed -i "s/YOUR_PROJECT_FRONTEND_DOMAIN/$frontendDomain/g" docker-compose.yml
 
 	sed -i "s/#frontend-service//g" docker-compose.yml
-	mkdir "frontend_src"
+	if [ ! -d "frontend_src" ]; then
+    	mkdir "frontend_src"
+  fi
+fi
+
+if [ ! -d "src" ]; then
+    mkdir "src"
 fi
 
 FILE=./src/.env.example
 if test -f "$FILE"; then
-    cp ./src/.env.example ./src/.env
+  cp ./src/.env.example ./src/.env
 	sed -i "s/DB_HOST=.*/DB_HOST=mysql/g" ./src/.env
 	sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=password/g" ./src/.env
 	sed -i "s/APP_NAME=.*/APP_NAME=$projectName/g" ./src/.env
