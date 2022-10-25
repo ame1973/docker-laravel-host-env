@@ -53,8 +53,8 @@ services:
 #frontend-service    labels:
 #frontend-service      - "traefik.enable=true"
 #frontend-service      - "traefik.docker.network=traefik-proxy"
-#frontend-service      - "traefik.http.routers.dev_nftiv_marketplace_frontend.rule=Host(`YOUR_PROJECT_FRONTEND_DOMAIN`)"
-#frontend-service      - "traefik.http.routers.dev_nftiv_marketplace_frontend.entrypoints=websecure"
+#frontend-service      - "traefik.http.routers.YOUR_PROJECT_NAME_frontend.rule=Host(`YOUR_PROJECT_FRONTEND_DOMAIN`)"
+#frontend-service      - "traefik.http.routers.YOUR_PROJECT_NAME_frontend.entrypoints=websecure"
 
 networks:
   traefik-proxy:
