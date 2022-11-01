@@ -19,8 +19,8 @@ ENV COMPOSER_MEMORY_LIMIT='-1'
 
 RUN apt-get update && \
     apt-get install -y --force-yes --no-install-recommends \
+        libonig-dev \
         libmemcached-dev \
-        libzip-dev \
         libz-dev \
         libzip-dev \
         libpq-dev \
@@ -36,11 +36,15 @@ RUN apt-get update && \
         libxml2-dev \
         libreadline-dev \
         libgmp-dev \
-        mariadb-client \
+        #mariadb-client \
+        default-mysql-client \
         unzip
 
 # Install soap extention
 RUN docker-php-ext-install soap
+
+# Install the mbstring
+RUN docker-php-ext-install mbstring
 
 # Install for image manipulation
 RUN docker-php-ext-install exif
@@ -52,10 +56,11 @@ RUN docker-php-ext-install pcntl
 RUN docker-php-ext-install zip
 
 # Install the PHP pdo_mysql extention
+RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install pdo_mysql
 
 # Install the PHP pdo_pgsql extention
-RUN docker-php-ext-install pdo_pgsql
+#RUN docker-php-ext-install pdo_pgsql
 
 # Install the PHP bcmath extension
 RUN docker-php-ext-install bcmath
@@ -97,7 +102,7 @@ RUN pecl install memcached && docker-php-ext-enable memcached
 #####################################
 # PHP Swoole:
 #####################################
-# RUN pecl install swoole && docker-php-ext-enable swoole.so
+#RUN pecl install swoole && docker-php-ext-enable swoole.so
 
 # Get latest Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

@@ -15,59 +15,100 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    apt-utils \
-    git \
-    curl \
-    vim \
-    locales \
-    libpng-dev \
-    libsodium-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
-    procps \
-    libgmp-dev \
-    re2c \
-    libmhash-dev \
-    libmcrypt-dev \
-    file \
-    default-mysql-client \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install exif \
-    && docker-php-ext-install pcntl \
-    && docker-php-ext-install bcmath \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install zip \
-    && docker-php-source delete \
-    && apt-get clean
+ENV COMPOSER_MEMORY_LIMIT='-1'
 
-RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
-RUN docker-php-ext-configure gmp 
+RUN apt-get update && \
+    apt-get install -y --force-yes --no-install-recommends \
+        libonig-dev \
+        libmemcached-dev \
+        libz-dev \
+        libzip-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libssl-dev \
+        openssh-server \
+        libmagickwand-dev \
+        git \
+        cron \
+        nano \
+        libxml2-dev \
+        libreadline-dev \
+        libgmp-dev \
+        #mariadb-client \
+        default-mysql-client \
+        unzip
+
+# Install soap extention
+RUN docker-php-ext-install soap
+
+# Install the mbstring
+RUN docker-php-ext-install mbstring
+
+# Install for image manipulation
+RUN docker-php-ext-install exif
+
+# Install the PHP pcntl extention
+RUN docker-php-ext-install pcntl
+
+# Install the PHP zip extention
+RUN docker-php-ext-install zip
+
+# Install the PHP pdo_mysql extention
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo_mysql
+
+# Install the PHP pdo_pgsql extention
+#RUN docker-php-ext-install pdo_pgsql
+
+# Install the PHP bcmath extension
+RUN docker-php-ext-install bcmath
+
+# Install the PHP intl extention
+RUN docker-php-ext-install intl
+
+# Install the PHP gmp extention
 RUN docker-php-ext-install gmp
 
-# redis
-RUN pecl install redis && docker-php-ext-enable redis.so
+#####################################
+# PHPRedis:
+#####################################
+RUN pecl install redis && docker-php-ext-enable redis
 
-# swoole
+#####################################
+# Imagick:
+#####################################
+
+RUN pecl install imagick && \
+    docker-php-ext-enable imagick
+
+#####################################
+# GD:
+#####################################
+
+# Install the PHP gd library
+RUN docker-php-ext-install gd && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd
+
+#####################################
+# PHP Memcached:
+#####################################
+
+# Install the php memcached extension
+RUN pecl install memcached && docker-php-ext-enable memcached
+
+#####################################
+# PHP Swoole:
+#####################################
 RUN pecl install swoole && docker-php-ext-enable swoole.so
 
 # Get latest Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install supervisor
-RUN apt-get update &&\
-    apt-get install -y supervisor &&\
-    touch /var/run/supervisor.sock &&\
-    chmod 777 /var/run/supervisor.sock &&\
-    unlink /var/run/supervisor.sock
-	
-RUN chmod -R 777 /var/log/supervisor
+RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests supervisor
 
 # Clear cache
 RUN apt-get clean \
@@ -92,4 +133,5 @@ COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 USER $WWWUSERNAME
 
 # Start php-fpm server
-CMD ["/usr/bin/supervisord"]
+# TODO, change to auto start supervisor laravel octane
+CMD ["php-fpm"]
