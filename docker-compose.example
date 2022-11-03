@@ -20,6 +20,8 @@ services:
       - internal
 
   nginx:
+    depends_on:
+      - php
     image: nginx:stable-alpine
     restart: unless-stopped
     tty: true
