@@ -136,4 +136,4 @@ USER $WWWUSERNAME
 COPY laravel_octane.conf /etc/supervisord.conf.d/
 
 # Start php-fpm server
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
