@@ -132,7 +132,7 @@ COPY . /var/www/app
 COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 
 # Change current user to www
-USER $WWWUSERNAME
+USER root
 
 COPY laravel_octane.conf /etc/supervisord.conf.d/
 
