@@ -134,7 +134,7 @@ USER root
 
 RUN chmod -R 777 /var/log/supervisor
 RUN chmod -R 777 /var/run
-COPY laravel_octane.conf /etc/supervisord.conf.d/
+COPY laravel_octane/laravel_octane.conf /etc/supervisord.conf.d/
 
 # Start php-fpm server
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
