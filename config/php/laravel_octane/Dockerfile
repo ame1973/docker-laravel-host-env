@@ -110,6 +110,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install supervisor
 RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests supervisor
 RUN chmod -R 777 /var/log/supervisor
+RUN chmod -R 777 /var/run
 
 # Clear cache
 RUN apt-get clean \
