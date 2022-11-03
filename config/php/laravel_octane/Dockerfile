@@ -133,5 +133,4 @@ COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 USER $WWWUSERNAME
 
 # Start php-fpm server
-# TODO, change to auto start supervisor laravel octane
-CMD ["php-fpm"]
+CMD ["/usr/bin/supervisord"]
