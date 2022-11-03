@@ -6,7 +6,7 @@ read -p 'Project Domain: ' projectDomain
 cp docker-compose.example docker-compose.yml
 
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" docker-compose.yml
-sed -i "s/YOUR_PROJECT_DOMAIN.com/$projectDomain/g" docker-compose.yml
+sed -i "s/YOUR_PROJECT_DOMAIN/$projectDomain/g" docker-compose.yml
 
 DEFAULT="n"
 read -p "Run Laravel at octane? [y/N]: " eOctane
