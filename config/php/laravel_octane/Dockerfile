@@ -109,6 +109,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install supervisor
 RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests supervisor
+RUN touch /var/run/supervisor.sock
+RUN chmod 777 /var/run/supervisor.sock
+RUN unlink /var/run/supervisor.sock
+RUN chmod -R 777 /var/log/supervisor
+RUN chmod -R 777 /var/run
+COPY laravel_octane/laravel_octane.conf /etc/supervisord.conf.d/
 
 # Clear cache
 RUN apt-get clean \
@@ -130,11 +136,7 @@ COPY . /var/www/app
 COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 
 # Change current user to www
-USER root
-
-RUN chmod -R 777 /var/log/supervisor
-RUN chmod -R 777 /var/run
-COPY laravel_octane/laravel_octane.conf /etc/supervisord.conf.d/
+USER WWWUSERNAME
 
 # Start php-fpm server
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
+#ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
