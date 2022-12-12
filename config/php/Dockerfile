@@ -132,5 +132,12 @@ COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 # Change current user to www
 USER $WWWUSERNAME
 
+COPY ./crontab /var/spool/cron/crontabs/root
+RUN chmod 0644 /var/spool/cron/crontabs/root
+RUN crontab /var/spool/cron/crontabs/root
+
+COPY ./entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["entrypoint.sh"]
+
 # Start php-fpm server
 CMD ["php-fpm"]
