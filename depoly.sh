@@ -23,8 +23,13 @@ else
 	sed -i "s/#php-fpm//g" docker-compose.yml
 fi
 
+
+# create mysql databases
 MYSQL_COMMAND="create database ${projectName}_db;"
 docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql -uroot -p'password'"
+
+ip_start = $(find ./ -maxdepth 1 -type d | wc -l)
+sed -i "s/PROJECT_IP_START/$ip_start/g" docker-compose.yml
 
 read -p "Enable Frontend web service? [y/N]: " eFrontend
 eFrontend="${eFrontend:-${DEFAULT}}"
