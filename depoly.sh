@@ -6,6 +6,7 @@ read -p 'Project Domain: ' projectDomain
 if [ "${1}" == "clone" ] ; then
   git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
   cd $projectName
+  pwd
 fi
 
 cp docker-compose.example docker-compose.yml
