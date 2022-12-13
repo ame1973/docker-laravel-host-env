@@ -18,6 +18,7 @@ services:
       - ./volumes/supervisor_conf:/etc/supervisor/conf.d
     networks:
       - internal
+      - service_network
 
   nginx:
     depends_on:
@@ -73,6 +74,8 @@ services:
 
 networks:
   traefik-proxy:
+    external: true
+  service_network:
     external: true
   internal:
     driver: bridge
