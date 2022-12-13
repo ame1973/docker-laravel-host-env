@@ -3,6 +3,11 @@
 read -p 'Project Name (A-Za-z0-9_): ' projectName
 read -p 'Project Domain: ' projectDomain
 
+if [ "${1}" == "clone" ] ; then
+  git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
+  cd $projectName
+fi
+
 cp docker-compose.example docker-compose.yml
 
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" docker-compose.yml
@@ -29,6 +34,16 @@ if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
 	sed -i "s/#frontend-service//g" docker-compose.yml
 	if [ ! -d "frontend_src" ]; then
     	mkdir "frontend_src"
+  fi
+fi
+
+read -p "Enable Web3/Node service? [y/N]: " eFrontend
+eFrontend="${eFrontend:-${DEFAULT}}"
+if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
+
+	sed -i "s/#web3-service//g" docker-compose.yml
+	if [ ! -d "web3_src" ]; then
+    	mkdir "web3_src"
   fi
 fi
 

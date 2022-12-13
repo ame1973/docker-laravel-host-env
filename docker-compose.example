@@ -58,6 +58,19 @@ services:
 #frontend-service      - "traefik.http.routers.YOUR_PROJECT_NAME_frontend.rule=Host(`YOUR_PROJECT_FRONTEND_DOMAIN`)"
 #frontend-service      - "traefik.http.routers.YOUR_PROJECT_NAME_frontend.entrypoints=websecure"
 
+#web3-service  web3:
+#web3-service    image: node:lts
+#web3-service    tty: true
+#web3-service    ports:
+#web3-service      - 3000
+#web3-service    volumes:
+#web3-service      - ./web3_src:/opt/app
+#web3-service    command: bash -c "yarn start"
+#web3-service    restart: unless-stopped
+#web3-service    working_dir: /opt/app
+#web3-service    networks:
+#web3-service      - internal
+
 networks:
   traefik-proxy:
     external: true
