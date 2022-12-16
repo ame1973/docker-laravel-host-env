@@ -127,6 +127,10 @@ RUN apt-get clean \
 RUN groupadd --force -g $WWWGROUP $WWWUSERNAME \
     && useradd -ms /bin/bash --no-log-init --no-user-group -g $WWWGROUP -u $WWWUSER $WWWUSERNAME
 
+COPY ./laravel_octane/crontab /var/spool/cron/crontabs/root
+RUN chmod 0644 /var/spool/cron/crontabs/root
+RUN crontab /var/spool/cron/crontabs/root
+
 # Set working directory
 WORKDIR /var/www/app
 
@@ -138,10 +142,6 @@ COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 
 # Change current user to www
 USER $WWWUSERNAME
-
-COPY ./laravel_octane/crontab /var/spool/cron/crontabs/root
-RUN chmod 0644 /var/spool/cron/crontabs/root
-RUN crontab /var/spool/cron/crontabs/root
 
 COPY ./laravel_octane/entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["entrypoint.sh"]
