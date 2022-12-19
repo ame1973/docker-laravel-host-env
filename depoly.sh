@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "----------------------------------------"
+echo "v1.0.0 Deploy Script"
+echo "----------------------------------------"
+echo "[INFO] Running depoly.sh"
+echo ""
+
 if [ "${1}" == "naas" ] ; then
   if [ "${2}" == "" ] ; then
     read -p 'Project Name (A-Za-z0-9_): ' projectName
