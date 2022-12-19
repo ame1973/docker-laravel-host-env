@@ -1,12 +1,27 @@
 #!/bin/bash
 
-read -p 'Project Name (A-Za-z0-9_): ' projectName
-read -p 'Project Domain: ' projectDomain
+if [ "${1}" == "naas" ] ; then
+  if [ "${2}" == "" ] ; then
+    read -p 'Project Name (A-Za-z0-9_): ' projectName
+  else
+    projectName=${2}
+  fi
 
-if [ "${1}" == "clone" ] ; then
+  if [ "${3}" == "" ] ; then
+    read -p 'Project Domain: ' projectDomain
+  else
+    projectDomain=${3}
+  fi
+
   git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
+
+  # shellcheck disable=SC2164
   cd $projectName
+
   pwd
+else
+  read -p 'Project Name (A-Za-z0-9_): ' projectName
+  read -p 'Project Domain: ' projectDomain
 fi
 
 cp docker-compose.example docker-compose.yml
@@ -15,7 +30,12 @@ sed -i "s/YOUR_PROJECT_NAME/$projectName/g" docker-compose.yml
 sed -i "s/YOUR_PROJECT_DOMAIN/$projectDomain/g" docker-compose.yml
 
 DEFAULT="n"
-read -p "Run Laravel at octane? [y/N]: " eOctane
+if [ "${1}" == "naas" ] ; then
+  DEFAULT="y"
+else
+  read -p "Run Laravel at octane? [y/N]: " eOctane
+fi
+
 eOctane="${eOctane:-${DEFAULT}}"
 if [ "${eOctane}" = "y" ] || [ "${eOctane}" = "Y" ]; then
 	sed -i "s/#laravel-octane//g" docker-compose.yml
@@ -31,10 +51,19 @@ docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql
 ip_start=$(find ./ -maxdepth 1 -type d | wc -l)
 sed -i "s/PROJECT_IP_START/$ip_start/g" docker-compose.yml
 
-read -p "Enable Frontend web service? [y/N]: " eFrontend
+DEFAULT="n"
+if [ "${1}" == "naas" ] ; then
+  DEFAULT="y"
+else
+  read -p "Enable Frontend web service? [y/N]: " eFrontend
+fi
 eFrontend="${eFrontend:-${DEFAULT}}"
 if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
-  read -p 'Frontend Domain: ' frontendDomain
+  if [ "${1}" == "naas" ] ; then
+    frontendDomain="marketplace.$projectDomain"
+  else
+    read -p 'Frontend Domain: ' frontendDomain
+  fi
   sed -i "s/YOUR_PROJECT_FRONTEND_DOMAIN/$frontendDomain/g" docker-compose.yml
 
 	sed -i "s/#frontend-service//g" docker-compose.yml
@@ -43,7 +72,12 @@ if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
   fi
 fi
 
-read -p "Enable Web3/Node service? [y/N]: " eFrontend
+DEFAULT="n"
+if [ "${1}" == "naas" ] ; then
+  DEFAULT="y"
+else
+  read -p "Enable Web3/Node service? [y/N]: " eFrontend
+fi
 eFrontend="${eFrontend:-${DEFAULT}}"
 if [ "${eFrontend}" = "y" ] || [ "${eFrontend}" = "Y" ] ; then
 
