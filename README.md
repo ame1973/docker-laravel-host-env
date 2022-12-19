@@ -72,3 +72,9 @@ rm -rf volumes
 - ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
 
 change `mysql:8.0.28` to `mysql/mysql-server:8.0.28`
+
+## Test
+
+```bash
+bash <(curl -s -H 'Pragma: no-cache' https://raw.githubusercontent.com/ame1973/docker-laravel-host-env/master/depoly.sh) naas this_is_project_name project_domain.test
+```
