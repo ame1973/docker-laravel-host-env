@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "----------------------------------------"
-echo "v1.0.0 Deploy Script"
+echo "v1.0.1 Deploy Script"
 echo "----------------------------------------"
 echo "[INFO] Running depoly.sh"
 echo ""
