@@ -18,17 +18,17 @@ if [ "${1}" == "naas" ] ; then
   else
     projectDomain=${3}
   fi
-
-  git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
-
-  # shellcheck disable=SC2164
-  cd $projectName
-
-  pwd
 else
   read -p 'Project Name (A-Za-z0-9_): ' projectName
   read -p 'Project Domain: ' projectDomain
 fi
+
+git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
+
+# shellcheck disable=SC2164
+cd $projectName
+
+pwd
 
 cp docker-compose.example docker-compose.yml
 
