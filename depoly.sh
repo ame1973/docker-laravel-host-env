@@ -23,6 +23,12 @@ else
   read -p 'Project Domain: ' projectDomain
 fi
 
+if [ -d "$projectName" ]; then
+  # Take action if $DIR exists. #
+  echo "[INFO] Project already exists"
+  exit 1
+fi
+
 git clone https://github.com/ame1973/docker-laravel-host-env.git $projectName
 
 # shellcheck disable=SC2164
