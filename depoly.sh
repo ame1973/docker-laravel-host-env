@@ -38,6 +38,26 @@ pwd
 
 cp docker-compose.example docker-compose.yml
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+if [ ${machine} == "Mac" ] ; then
+  echo "OS is ${machine}"
+  if ! [ -x "$(command -v gsed)" ]; then
+    echo 'Error: gsed is not installed. (brew install gnu-sed)' >&2
+    exit 1
+  fi
+  function sed() {
+      gsed "$@"
+  }
+fi
+
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" docker-compose.yml
 sed -i "s/YOUR_PROJECT_DOMAIN/$projectDomain/g" docker-compose.yml
 

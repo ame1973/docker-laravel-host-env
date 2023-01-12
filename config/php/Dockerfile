@@ -134,10 +134,7 @@ COPY . /var/www/app
 COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 
 # Change current user to www
-USER $WWWUSERNAME
-
-COPY ./entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["entrypoint.sh"]
+#USER $WWWUSERNAME
 
 # Start php-fpm server
-CMD ["php-fpm"]
+CMD bash -c "cron && php-fpm"

@@ -141,10 +141,7 @@ COPY . /var/www/app
 COPY --chown=$WWWUSERNAME:$WWWUSERNAME . /var/www/app
 
 # Change current user to www
-USER $WWWUSERNAME
-
-COPY ./laravel_octane/entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["entrypoint.sh"]
+#USER $WWWUSERNAME
 
 # Start service
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+CMD bash -c "cron && /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf"
