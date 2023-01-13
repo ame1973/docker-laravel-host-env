@@ -12,3 +12,4 @@ volumes/*
 .idea/
 
 backup/mysql/*
+!backup/mysql/.gitignore
