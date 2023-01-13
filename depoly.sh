@@ -134,11 +134,11 @@ fi
 #	sed -i "s/APP_URL=.*/APP_URL=https:\/\/$projectDomain/g" ./src/.env
 #fi
 
-cp ./backup/backup_db.sh.example backup_db.sh
-sed -i "s/YOUR_PROJECT_NAME/$projectName/g" backup_db.sh
+cp ./backup/db_backup.sh.example db_backup.sh
+sed -i "s/YOUR_PROJECT_NAME/$projectName/g" db_backup.sh
 
-cp ./backup/restore_db.sh.example restore_db.sh
-sed -i "s/YOUR_PROJECT_NAME/$projectName/g" restore_db.sh
+cp ./backup/db_restore.sh.example db_restore.sh
+sed -i "s/YOUR_PROJECT_NAME/$projectName/g" db_restore.sh
 
 cp ./config/script/bash.sh.example bash.sh
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" bash.sh
