@@ -137,6 +137,9 @@ fi
 cp ./backup/backup_db.sh.example backup_db.sh
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" backup_db.sh
 
+cp ./backup/restore_db.sh.example restore_db.sh
+sed -i "s/YOUR_PROJECT_NAME/$projectName/g" restore_db.sh
+
 cp ./config/script/bash.sh.example bash.sh
 sed -i "s/YOUR_PROJECT_NAME/$projectName/g" bash.sh
 

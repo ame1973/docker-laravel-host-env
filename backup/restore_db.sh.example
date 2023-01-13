@@ -1,0 +1,33 @@
+#!/bin/bash
+
+files=("./backup/mysql/YOUR_PROJECT_NAME_db_"*.sql)
+
+PS3='Select file to upload, or 0 to exit: '
+select file in "${files[@]}"; do
+    if [[ $REPLY == "0" ]]; then
+        echo 'Bye!' >&2
+        exit
+    elif [[ -z $file ]]; then
+        echo 'Invalid choice, try again' >&2
+    else
+        echo "You picked ($REPLY) $file"
+
+        read -p "Are you sure restore? [y/N]: " confirm
+        if [ "${confirm}" != "y" ] && [ "${confirm}" != "Y" ]; then
+            echo "[INFO] End script"
+            exit 0;
+        fi
+
+        OUTPUT_PATH=./backup/mysql/YOUR_PROJECT_NAME_db_$(date '+%Y-%m-%d_%H:%M:%S')_before_restore.sql
+        docker exec docker-laravel-base-env-mysql-1 sh -c 'exec mysqldump --databases YOUR_PROJECT_NAME_db -uroot -p"password"' > ${OUTPUT_PATH}
+
+        echo "Backup, file output to ${OUTPUT_PATH}"
+
+        cmd="exec mysql -u root -ppassword YOUR_PROJECT_NAME_db < /temp/backups/${filename}"
+        cat ${file} | docker exec -i docker-laravel-base-env-mysql-1 /usr/bin/mysql -u root -ppassword YOUR_PROJECT_NAME_db
+
+        echo "[INFO] DONE"
+
+        break
+    fi
+done
