@@ -106,7 +106,7 @@ RUN pecl install memcached && docker-php-ext-enable memcached
 #####################################
 # PHP Swoole:
 #####################################
-RUN pecl install swoole && docker-php-ext-enable swoole.so
+RUN pecl install swoole-4.8.12 && docker-php-ext-enable swoole.so
 
 # Get latest Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
