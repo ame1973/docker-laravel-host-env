@@ -67,6 +67,10 @@ rm -rf volumes
 
 `composer` and `php artisan` command need go to php containers shell run.
 
+## PHP image
+
+https://hub.docker.com/repository/docker/ame1973/php-81-laravel-supervisor/general
+
 ## Issue
 
 - ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
@@ -76,5 +80,5 @@ change `mysql:8.0.28` to `mysql/mysql-server:8.0.28`
 ## Test
 
 ```bash
-bash <(curl -s -H 'Pragma: no-cache' https://raw.githubusercontent.com/ame1973/docker-laravel-host-env/master/depoly.sh) naas this_is_project_name project_domain.test
+bash <(curl -s -H 'Pragma: no-cache' -H "Cache-Control: no-cache, no-store, must-revalidate" https://raw.githubusercontent.com/ame1973/docker-laravel-host-env/master/depoly.sh?_=$(date +%s)) naas project_name project_domain.com
 ```
