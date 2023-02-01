@@ -40,6 +40,10 @@ RUN apt-get update && \
         default-mysql-client \
         unzip
 
+# Install nodejs 16.x
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
 # Install soap extention
 RUN docker-php-ext-install soap
 
@@ -115,7 +119,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --no-install-su
 RUN mkdir -p /var/log/supervisor
 RUN chmod -R 777 /var/log/supervisor
 RUN chmod -R 777 /var/run
-COPY laravel_octane/laravel_octane.conf /etc/supervisor/conf.d
+COPY ./laravel_octane.conf /etc/supervisor/conf.d
 
 # Clear cache
 RUN apt-get clean \
@@ -127,7 +131,7 @@ RUN apt-get clean \
 RUN groupadd --force -g $WWWGROUP $WWWUSERNAME \
     && useradd -ms /bin/bash --no-log-init --no-user-group -g $WWWGROUP -u $WWWUSER $WWWUSERNAME
 
-COPY ./laravel_octane/crontab /var/spool/cron/crontabs/root
+COPY ./crontab /var/spool/cron/crontabs/root
 RUN chmod 0644 /var/spool/cron/crontabs/root
 RUN crontab /var/spool/cron/crontabs/root
 

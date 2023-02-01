@@ -40,6 +40,10 @@ RUN apt-get update && \
         default-mysql-client \
         unzip
 
+# Install nodejs 16.x
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
 # Install soap extention
 RUN docker-php-ext-install soap
 
