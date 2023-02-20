@@ -3,9 +3,7 @@ version: "3.7"
 services:
   php:
 #laravel-octane    image: ame1973/php-81-laravel-supervisor:latest
-#php-fpm    build:
-#php-fpm      context: ./config/php
-#php-fpm      dockerfile: ./Dockerfile
+#php-fpm    image: ame1973/php-81-laravel:latest
     restart: unless-stopped
     tty: true
     working_dir: /var/www/app/
