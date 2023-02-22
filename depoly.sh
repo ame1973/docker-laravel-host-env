@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "----------------------------------------"
-echo "v1.0.1 Deploy Script"
+echo "v1.0.2 Deploy Script"
 echo "----------------------------------------"
 echo "[INFO] Running depoly.sh"
 echo ""
@@ -80,6 +80,7 @@ fi
 MYSQL_COMMAND="CREATE DATABASE IF NOT EXISTS ${projectName}_db;"
 docker exec docker-laravel-base-env-mysql-1 sh -c "echo '$MYSQL_COMMAND' | mysql -uroot -p'password'"
 
+ls -al
 
 ip_start=$(find ./ -maxdepth 1 -type d | wc -l)
 sed -i "s/PROJECT_IP_START/$ip_start/g" docker-compose.yml
