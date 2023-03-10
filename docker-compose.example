@@ -21,7 +21,7 @@ services:
   nginx:
     depends_on:
       - php
-    image: nginx:stable-alpine
+    image: ame1973/nginx-alpine-geoip2:latest
     restart: unless-stopped
     tty: true
     volumes:
@@ -30,6 +30,10 @@ services:
       - ./volumes/nginx/log:/var/log/nginx
 #php-fpm      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
 #laravel-octane      - ./config/nginx/laravel_octane/default.conf:/etc/nginx/conf.d/default.conf
+#    logging:
+#          driver: fluentd
+#          options:
+#            fluentd-address: 127.0.0.1:24224
     networks:
       - internal
       - traefik-proxy
