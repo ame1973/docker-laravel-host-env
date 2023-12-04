@@ -71,6 +71,22 @@ rm -rf volumes
 
 https://hub.docker.com/repository/docker/ame1973/php-81-laravel-supervisor/general
 
+### Build
+
+```shell
+# config/php81/laravel-octane/Dockerfile
+docker buildx build --platform linux/arm64 -t ame1973/php-81-laravel-supervisor:latest . --push
+
+# config/php81/Dockerfile
+docker buildx build --platform linux/arm64 -t ame1973/php-81-laravel:latest . --push
+
+# config/php81/laravel-octane/Dockerfile
+docker buildx build --platform linux/arm64 -t ame1973/php-82-laravel-supervisor:latest . --push
+
+# config/php81/Dockerfile
+docker buildx build --platform linux/arm64 -t ame1973/php-82-laravel:latest . --push
+``` 
+
 ## Issue
 
 - ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
